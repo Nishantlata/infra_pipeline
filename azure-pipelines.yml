@@ -63,3 +63,25 @@ stages:
         provider: 'azurerm'
         command: 'plan'
         environmentServiceNameAzureRM: 'may-infra'
+
+- stage: Thorthstage
+  displayName: terraform Apply
+  jobs:
+  - job: terraform_Apply
+    steps:
+    - task: TerraformTaskV4@4
+      displayName: Terraform Apply
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        backendServiceArm: 'may-infra'
+        backendAzureRmResourceGroupName: 'devops'
+        backendAzureRmStorageAccountName: 'infrastg1'
+        backendAzureRmContainerName: 'infracont'
+        backendAzureRmKey: 'main.tfstate'
+    
+    - task: TerraformTask@5
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        environmentServiceNameAzureRM: 'may-infra'
