@@ -1,0 +1,23 @@
+trigger:
+- main
+
+pool:
+  name: "may agent pool -infra"
+
+stages:
+- stage: Firststage
+  displayName: terraform init
+  jobs:
+  - job: terraform_initialization
+    steps:
+    - task: TerraformTaskV4@4
+      displayName: Terraform Init
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        backendServiceArm: 'may-infra'
+        backendAzureRmResourceGroupName: 'devops'
+        backendAzureRmStorageAccountName: 'infrastg1'
+        backendAzureRmContainerName: 'infracont'
+        backendAzureRmKey: 'main.tfstate'
+
