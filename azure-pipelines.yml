@@ -5,6 +5,13 @@ pool:
   name: "may agent pool -infra"
 
 stages:
+- stage: lint
+  displayName: lintingprocess
+  jobs:
+  - job: terraformlint
+    steps:
+    
+
 - stage: Firststage
   displayName: terraform init
   jobs:
