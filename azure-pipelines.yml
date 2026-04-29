@@ -10,20 +10,20 @@ stages:
   jobs:
   - job: terraformlint
     steps:
-    - task: Bash@3
+    - task: PowerShell@2
       inputs:
         targetType: 'inline'
         script: |
-          echo "Downloading TFLint..."
+          Write-Host "Downloading TFLint..."
 
-          curl -L -o tflint.zip https://github.com/terraform-linters/tflint/releases/latest/download/tflint_windows_amd64.zip
-          
-          echo "Unzipping..."
-          powershell.exe -Command "Expand-Archive -Path tflint.zip -DestinationPath ."
+          Invoke-WebRequest -Uri "https://github.com/terraform-linters/tflint/releases/latest/download/tflint_windows_amd64.zip" -OutFile "tflint.zip"
 
-          echo "Running TFLint..."
-          ./tflint.exe --init
-          ./tflint.exe
+          Write-Host "Extracting..."
+          Expand-Archive -Path "tflint.zip" -DestinationPath "." -Force
+
+          Write-Host "Running TFLint..."
+          .\tflint.exe --init
+          .\tflint.exe
 
 
 - stage: Firststage
